@@ -1,17 +1,24 @@
-#!usr/bin/python3
+import socket               # Import socket module
+from thread import *
 
-from socket import *
+s = socket.socket()         
+host = socket.gethostname()
+port = 8281                # Reserve a port for your service.
+s.connect((host, port))
 
-HOST = ''
-PORT = 8086
 
-s = socket(AF_INET,SOCK_STREAM)
-s.connect((HOST,PORT))
 
+
+def recvthread (null):
+        while True:
+                Reply = s.recv(1024)
+                print  Reply
+
+start_new_thread(recvthread,(0,))
 while True:
-	Message = raw_input('Send:')
-	s.send(Message)
-	Reply = s.recv(1024)
-	print 'Received:', (Reply)
+        Message = raw_input()
+        s.send(Message)
+        if Message.lower() == 'quit()' or Message.lower() == 'exit()' :
+                break
 
 s.close()
